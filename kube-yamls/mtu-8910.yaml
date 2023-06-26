@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: mtu-setter
+  namespace: yandex-system
+spec:
+  selector:
+    matchLabels:
+      name: mtu-setter
+  template:
+    metadata:
+      labels:
+        name: mtu-setter
+    spec:
+      hostNetwork: true  # Needed to manipulate host network settings
+      tolerations:
+       - operator: "Exists"  # Tolerate all taints
+      containers:
+      - name: mtu-setter
+        image: weibeld/ubuntu-networking:latest # i need 
+        securityContext:
+          privileged: true  # Needed to change network settings
+        command: 
+        - "/bin/bash"
+        - "-c"
+        - |
+          while true; do
+            MTU=$(ifconfig eth0 | grep -oP 'mtu \K[0-9]+');
+            if [ "$MTU" != "8910" ]; then
+              ifconfig eth0 mtu 8910;
+              echo "MTU changed to 8910 for eth0";
+            fi
+              echo "MTU is not set"
+              sleep 60;
+          done

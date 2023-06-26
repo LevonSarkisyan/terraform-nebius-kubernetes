@@ -13,3 +13,9 @@ terraform {
     }
   }
 }
+
+provider "yandex" {
+  endpoint = "api.cloudil.com:443"
+  folder_id = "b4812h79t9sh58f9m1i1"
+
+}

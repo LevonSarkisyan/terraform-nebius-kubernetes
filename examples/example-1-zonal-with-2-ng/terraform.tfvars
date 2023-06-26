@@ -1,11 +1,15 @@
 
-network_id           = "enpneopbt180nusgut3q"
+network_id           = "ccmv77bfdhskp43optv4"
 cluster_name         = "kube-regional-cluster"
 cluster_version      = "1.23"
 description          = "Kubernetes test cluster"
 public_access        = true
-create_kms           = true
-enable_cilium_policy = true
+create_kms           = false
+enable_cilium_policy = false
+
+
+#PORT TO MODULE
+
 
 kms_key = {
   name = "kube-regional-kms-key"

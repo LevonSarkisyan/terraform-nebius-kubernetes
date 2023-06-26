@@ -15,8 +15,9 @@ variable "master_region" {
     Name of the region where the cluster will be created. This setting is required for regional cluster and not used for zonal cluster.
   EOF
   type        = string
-  default     = "ru-central1"
+  default     = "eu-north1" # def
 }
+
 
 resource "random_string" "unique_id" {
   length  = 8
@@ -35,7 +36,7 @@ variable "cluster_name" {
 variable "description" {
   description = "Description of the Kubernetes cluster."
   type        = string
-  default     = "Yandex Managed K8S cluster"
+  default     = "Nebius Managed K8S cluster"
 }
 
 variable "cluster_version" {
@@ -84,6 +85,7 @@ variable "service_ipv6_range" {
   description = "IPv6 CIDR block. IP range for allocating pod addresses."
   type        = string
   default     = null
+
 }
 
 variable "service_account_name" {
@@ -111,7 +113,7 @@ variable "release_channel" {
 variable "network_policy_provider" {
   description = "Network policy provider for Kubernetes cluster"
   type        = string
-  default     = "CALICO"
+  default     = null #changed 
 }
 
 variable "enable_cilium_policy" {
@@ -130,7 +132,7 @@ variable "public_access" {
 variable "allow_public_load_balancers" {
   description = "Flag for creating new IAM role with a load-balancer.admin access."
   type        = bool
-  default     = true
+  default     = false #changed
 }
 
 variable "master_locations" {
@@ -186,7 +188,7 @@ variable "master_logging" {
   description = "(Optional) Master logging options."
   type        = map(any)
   default = {
-    enabled                = true
+    enabled                = false # changed from y
     folder_id              = null
     enabled_kube_apiserver = true
     enabled_autoscaler     = true
@@ -335,7 +337,7 @@ variable "container_runtime_type" {
 variable "create_kms" {
   description = "Flag for enabling or disabling KMS key creation."
   type        = bool
-  default     = true
+  default     = false # changed from y 
 }
 
 variable "kms_key" {
@@ -355,7 +357,7 @@ variable "enable_default_rules" {
      - Allows pod-to-pod and service-to-service communication.
      - Allows debugging ICMP packets from internal subnets.
      - Allows incomming traffic from the Internet to the NodePort port range.
-     - Allows all outgoing traffic. Nodes can connect to Yandex Container Registry, Yandex Object Storage, Docker Hub, etc.
+     - Allows all outgoing traffic. Nodes can connect to Nebius Container Registry, Nebius Object Storage, Docker Hub, etc.
      - Allow access to Kubernetes API via port 6443 from the subnet.
      - Allow access to Kubernetes API via port 443 from the subnet.
      - Allow access to worker nodes via SSH from the allowed IP range.
@@ -436,4 +438,10 @@ variable "allowed_ips_ssh" {
   description = "List of allowed IPv4 CIDR blocks for an access via SSH."
   type        = list(string)
   default     = ["0.0.0.0/0"]
+}
+
+variable "pod_mtu" {
+  description = "default pod mtu for networking"
+  type        = number
+  default     = 8910
 }

@@ -80,8 +80,12 @@ resource "yandex_kubernetes_node_group" "kube_node_groups" {
         }
       }
     }
+    container_network {
+      pod_mtu = lookup(each.value, "pod_mtu", var.pod_mtu)
+    }
 
     network_acceleration_type = lookup(each.value, "network_acceleration_type", var.network_acceleration_type)
+
 
     dynamic "container_runtime" {
       for_each = compact([lookup(each.value, "container_runtime_type", var.container_runtime_type)])
