@@ -1,4 +1,4 @@
-# Kubernetes Terraform Module for Yandex.Cloud
+# Kubernetes Terraform Module for Nebius
 
 ## Features
 

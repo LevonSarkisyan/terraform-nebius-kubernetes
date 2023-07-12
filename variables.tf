@@ -42,7 +42,7 @@ variable "description" {
 variable "cluster_version" {
   description = "Kubernetes cluster version"
   type        = string
-  default     = "1.23"
+  default     = "1.24"
 }
 
 variable "cluster_ipv4_range" {
@@ -443,5 +443,5 @@ variable "allowed_ips_ssh" {
 variable "pod_mtu" {
   description = "default pod mtu for networking"
   type        = number
-  default     = 8910
+  default     = 8880
 }

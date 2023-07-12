@@ -2,16 +2,15 @@
 module "kube" {
   source = "../../"
 
-  network_id = "ccmv77bfdhskp43optv4"
+  network_id = "btcgvhlv8kujb38gsfrf"
 
   master_locations = [
     {
       zone      = "il1-a"
-      subnet_id = "ddk090e7puonj3tl2k7m"
+      subnet_id = "ddkkt14tibo6me293o0r"
     },
     
   ]
-
 
   master_maintenance_windows = [
     {
@@ -27,13 +26,18 @@ module "kube" {
         size     = 2
       }
       nat = true
-    },
+      node_labels = {
+        "group" = "system"
+      }
+      node_taints = ["CriticalAddonsOnly=true:NoSchedule"]
+    } 
+
     "k8s-ng-a100-1gpu" = {
       description = "Kubernetes nodes a100-1-gpu nodes with autoscaling"
        auto_scale = {
-        min     = 0
+        min     = 1
         max     = 3
-        initial = 0
+        initial = 1
       }
       platform_id     = "gpu-standard-v3"
       node_cores      = 28
@@ -42,7 +46,12 @@ module "kube" {
       disk_type       = "network-ssd-nonreplicated"
       disk_size       = 93
 
+      node_labels = {
+        "group" = "a100-1gpu"
+      }
+      node_taints = ["group=a100-gpu:NoSchedule"]
     }
+/*
      "k8s-ng-a100-2gpu" = {
       description = "Kubernetes nodes a100-2-gpu nodes with autoscaling"
        auto_scale = {
@@ -56,6 +65,11 @@ module "kube" {
       node_gpus       = 2
       disk_type       = "network-ssd-nonreplicated"
       disk_size       = 93
+
+      node_labels = {
+        "group" = "a100-2gpu"
+      }
+      node_taints = ["group=a100-gpu:NoSchedule"]
 
     }
      "k8s-ng-a100-4gpu" = {
@@ -72,6 +86,12 @@ module "kube" {
       disk_type       = "network-ssd-nonreplicated"
       disk_size       = 93
 
+      node_labels = {
+        "group" = "a100-4gpu"
+      }
+      node_taints = ["group=a100-gpu:NoSchedule"]
+
+
     }
     "k8s-ng-a100-8gpu" = {
       description = "Kubernetes nodes a100-8-gpu nodes with autoscaling"
@@ -87,6 +107,31 @@ module "kube" {
       disk_type       = "network-ssd-nonreplicated"
       disk_size       = 93
 
+      node_labels = {
+        "group" = "a100-8gpu"
+      }
+      node_taints = ["group=a100-gpu:NoSchedule"]
+
+
+    }
+  */  
+    "k8s-ng-cpu" = {
+      description = "Kubernetes CPU nodes with autoscaling"
+       auto_scale = {
+        min     = 0
+        max     = 1
+        initial = 0
+      }
+      platform_id     = "standard-v3"
+      node_cores      = 28
+      node_memory     = 168
+      disk_type       = "network-ssd-nonreplicated"
+      disk_size       = 93
+
+      node_labels = {
+        "group" = "cpu"
+      }
+      node_taints = ["group=cpu:NoSchedule"]
     }
   }
 }

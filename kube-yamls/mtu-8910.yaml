@@ -24,12 +24,12 @@ spec:
         - "/bin/bash"
         - "-c"
         - |
-          while true; do
-            MTU=$(ifconfig eth0 | grep -oP 'mtu \K[0-9]+');
-            if [ "$MTU" != "8910" ]; then
-              ifconfig eth0 mtu 8910;
-              echo "MTU changed to 8910 for eth0";
-            fi
-              echo "MTU is not set"
-              sleep 60;
-          done
+          while :; do
+            current_mtu=$(ip link show dev eth0 | sed -n 's/.* mtu \([0-9]\+\).*/\1/p'); 
+            if [ $current_mtu -ne 8880 ]; then
+              echo "MTU skew detected, try adjust it..." 
+              ip link set dev eth0 mtu 8880 && echo success; 
+              ip link show dev eth0
+            fi; 
+            sleep 10; 
+          done 

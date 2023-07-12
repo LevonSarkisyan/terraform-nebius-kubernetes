@@ -15,7 +15,13 @@ terraform {
 }
 
 provider "yandex" {
-  endpoint = "api.cloudil.com:443"
-  folder_id = "b4812h79t9sh58f9m1i1"
+  endpoint = "api.nemax.nebius.cloud:443"
+  folder_id = "bjei07hkb7ti9df3g99n"
 
+}
+
+data "yandex_client_config" "client" {}
+
+data "yandex_kubernetes_cluster" "kubernetes" {
+  name = yandex_kubernetes_cluster.kube_cluster.name
 }

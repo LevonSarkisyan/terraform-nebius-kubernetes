@@ -8,6 +8,21 @@ output "cluster_name" {
   value       = try(yandex_kubernetes_cluster.kube_cluster.name, null)
 }
 
+output "external_v4_endpoint" {
+  description = "Kubernetes external IPv4 endpoint."
+  value       = yandex_kubernetes_cluster.kube_cluster.master[0].external_v4_endpoint
+}
+
+output "internal_v4_endpoint" {
+  description = "Kubernetes internal IPv4 endpoint."
+  value       = yandex_kubernetes_cluster.kube_cluster.master[0].internal_v4_endpoint
+}
+
+output "cluster_ca_certificate" {
+  description = "Kubernetes cluster CA certificate."
+  value       = yandex_kubernetes_cluster.kube_cluster.master[0].cluster_ca_certificate
+}
+
 # public ip with kube config download command 
 output "external_cluster_cmd" {
   description = <<EOF
