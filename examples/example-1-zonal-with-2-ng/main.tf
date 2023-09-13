@@ -2,12 +2,12 @@
 module "kube" {
   source = "../../"
 
-  network_id = "btcgvhlv8kujb38gsfrf"
+  network_id = "btcv2cj5kfckeag4c1sh"
 
   master_locations = [
     {
-      zone      = "il1-a"
-      subnet_id = "ddkkt14tibo6me293o0r"
+      zone      = "eu-north1-c"
+      subnet_id = "f8ut0dg73u4lpn570bsm"
     },
     
   ]
@@ -31,7 +31,7 @@ module "kube" {
       }
       node_taints = ["CriticalAddonsOnly=true:NoSchedule"]
     } 
-
+/*
     "k8s-ng-a100-1gpu" = {
       description = "Kubernetes nodes a100-1-gpu nodes with autoscaling"
        auto_scale = {
@@ -51,6 +51,7 @@ module "kube" {
       }
       node_taints = ["group=a100-gpu:NoSchedule"]
     }
+*/    
 /*
      "k8s-ng-a100-2gpu" = {
       description = "Kubernetes nodes a100-2-gpu nodes with autoscaling"
@@ -91,36 +92,37 @@ module "kube" {
       }
       node_taints = ["group=a100-gpu:NoSchedule"]
 
-
     }
-    "k8s-ng-a100-8gpu" = {
+   */
+
+    "k8s-ng-a100-8gpu1" = {
       description = "Kubernetes nodes a100-8-gpu nodes with autoscaling"
        auto_scale = {
-        min     = 0
+        min     = 2
         max     = 3
-        initial = 0
+        initial = 2
       }
       platform_id     = "gpu-standard-v3"
-      node_cores      = 8*28
-      node_memory     = 8*119
+      node_cores      = 224
+      node_memory     = 952
       node_gpus       = 8
       disk_type       = "network-ssd-nonreplicated"
-      disk_size       = 93
+      disk_size       = 2046
 
       node_labels = {
-        "group" = "a100-8gpu"
+        "group" = "a100-8gpu",
+  #      "node.kubernetes.io/nvidia-device-plugin-ds-ready" = "true"
       }
-      node_taints = ["group=a100-gpu:NoSchedule"]
-
+      # node_taints = ["group=a100-gpu:NoSchedule"]
 
     }
-  */  
+
     "k8s-ng-cpu" = {
       description = "Kubernetes CPU nodes with autoscaling"
        auto_scale = {
-        min     = 0
-        max     = 1
-        initial = 0
+        min     = 1
+        max     = 3
+        initial = 1
       }
       platform_id     = "standard-v3"
       node_cores      = 28

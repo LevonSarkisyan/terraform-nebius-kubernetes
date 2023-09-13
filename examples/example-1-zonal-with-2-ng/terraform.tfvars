@@ -1,6 +1,6 @@
 
-folder_id            = "bjei07hkb7ti9df3g99n"
-network_id           = "btcgvhlv8kujb38gsfrf"
+folder_id            = "bje2ksge0128su8pipov"
+network_id           = "btcrcchicde12n39qhu8"
 cluster_name         = "kube-regional-cluster"
 cluster_version      = "1.23"
 description          = "Kubernetes test cluster"

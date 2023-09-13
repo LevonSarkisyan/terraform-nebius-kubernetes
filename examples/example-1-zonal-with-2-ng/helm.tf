@@ -10,6 +10,16 @@ resource "helm_release" "descheduler" {
   ]
 }
 
+resource "helm_release" "gpu-operator" {
+  name       = "gpu-operator"
+  chart      = "../../gpu-operator"
+  namespace = "gpu-operator"
+  create_namespace = true
+  values = [
+    "${file("../../gpu-operator/values.yaml")}"
+  ]
+}
+
 provider "helm" {
     kubernetes {
       host                   = module.kube.external_v4_endpoint
