@@ -117,6 +117,29 @@ module "kube" {
 
     }
 
+    "k8s-ng-h100-8gpu1" = {
+      description = "Kubernetes nodes h100-8-gpu nodes with autoscaling"
+       auto_scale = {
+        min     = 2
+        max     = 3
+        initial = 3
+      }
+      platform_id     = "gpu-h100"
+      gpu_environment = "runc"
+      node_cores      = 160
+      node_memory     = 1280
+      node_gpus       = 8
+      disk_type       = "network-ssd-nonreplicated"
+      disk_size       = 2046
+
+      node_labels = {
+        "group" = "h100-8gpu",
+  #      "node.kubernetes.io/nvidia-device-plugin-ds-ready" = "true"
+      }
+      # node_taints = ["group=a100-gpu:NoSchedule"]
+
+    }
+
     "k8s-ng-cpu" = {
       description = "Kubernetes CPU nodes with autoscaling"
        auto_scale = {
